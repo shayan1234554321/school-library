@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'person'
 
 # This class represents a Teacher, inheriting from the Person class.
