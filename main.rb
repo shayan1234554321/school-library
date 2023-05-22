@@ -1,11 +1,17 @@
 require_relative './classes/menu'
 
-menu = Menu.new
-
-puts 'Welcome to School Library App!'
-
-loop do
-  menu.print_menu
-  user_choice = gets.chomp.to_i
-  menu.result(user_choice)
+def main
+  puts 'Welcome to School Library App!'
+  menu = Menu.new
+  loop do
+    menu.print_menu
+    user_choice = gets.chomp.to_i
+    if user_choice == 7
+      puts 'Thank you for using this app'
+      break
+    end
+    menu.result(user_choice)
+  end
 end
+
+main
