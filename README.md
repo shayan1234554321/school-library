@@ -85,6 +85,18 @@ ruby main.rb
 - Twitter: [@twitterhandle](https://twitter.com/shayan123455432)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/shayan-khan20/)
 
+👤 **Johnie**
+
+- GitHub: [@github](https://github.com/johnie261)
+- Twitter: [@twitter](https://twitter.com/njorogejohnie)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/muturijohn/)
+
+👤 **Iqbal Elham**
+
+- GitHub: [@iqbal-elham](https://github.com/Iqbal-Elham)
+- linkedIn: [@iqbal-elham](https://www.linkedin.com/in/iqbal-elham)
+
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🔭 Future Features <a name="future-features"></a>
