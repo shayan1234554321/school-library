@@ -1,3 +1,5 @@
+require_relative '../classes/nameable.rb'
+
 class BaseDecorater < Nameable
   def initialize(nameable)
     super()
