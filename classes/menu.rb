@@ -1,7 +1,10 @@
 require_relative '../app'
 
 class Menu
-  APP = App.new
+
+  def initialize(books , people , rentals)
+    @APP = App.new(books , people , rentals)
+  end
 
   def print_menu
     puts "\nPlease choose an option by entering a number:

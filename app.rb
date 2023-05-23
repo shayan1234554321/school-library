@@ -5,10 +5,10 @@ require_relative './classes/teacher'
 require_relative './classes/rental'
 
 class App
-  def initialize
-    @books = []
-    @people = []
-    @rentals = []
+  def initialize(books , people , rentals)
+    @books = books
+    @people = people
+    @rentals = rentals
   end
 
   def list_books
