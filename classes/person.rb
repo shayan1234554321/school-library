@@ -14,6 +14,16 @@ class Person < Nameable
   attr_accessor :rentals, :name, :age
   attr_reader :id
 
+  def to_h
+    {
+      id: @id,
+      name: @name,
+      age: @age,
+      parent_permission: @parent_permission,
+      rentals: @rentals.map(&:to_h)
+    }
+  end
+
   def can_use_services?
     return unless @age && @parent_permission
 

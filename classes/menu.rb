@@ -1,9 +1,8 @@
 require_relative '../app'
 
 class Menu
-
-  def initialize(books , people , rentals)
-    @APP = App.new(books , people , rentals)
+  def initialize(books, people, rentals)
+    @APP = App.new(books, people, rentals)
   end
 
   def print_menu
@@ -20,17 +19,17 @@ class Menu
   def result(user_choice)
     case user_choice
     when 1
-      APP.list_books
+      @APP.list_books
     when 2
-      APP.list_people
+      @APP.list_people
     when 3
-      APP.create_person
+      @APP.create_person
     when 4
-      APP.create_book
+      @APP.create_book
     when 5
-      APP.create_rental
+      @APP.create_rental
     when 6
-      APP.list_rentals_by_person_id
+      @APP.list_rentals_by_person_id
     end
   end
 end
