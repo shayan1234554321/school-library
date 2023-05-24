@@ -6,23 +6,23 @@ class Rental
     @date = date
 
     @book = book
-    book.rentals << self
+    book['rentals'] << self
 
     @person = person
-    person.rentals << self
+    person['rentals'] << self
   end
 
   def to_h
     {
       date: @date,
       book: {
-        title: @book.title,
-        author: @book.author
+        title: @book['title'],
+        author: @book['author']
       },
       person: {
-        id: @person.id,
-        name: @person.name,
-        age: @person.age
+        id: @person['id'],
+        name: @person['name'],
+        age: @person['age']
       }
     }
   end

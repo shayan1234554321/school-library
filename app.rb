@@ -12,33 +12,23 @@ class App
     @rentals = rentals
   end
 
-  def list_rentals
-    return puts 'No Rentals found' if @rentals.empty?
-
-    @rentals.each do |rental|
-      puts "Date #{rental["date"]}"
-      puts "Name #{rental["person"]["name"]}"
-      puts "Book #{rental["book"]["title"]}"
-    end
-  end
-
   def list_books
-
+    @books = JSON.parse(File.read('books.json')) if File.exist?('books.json')
     return puts 'No books found' if @books.empty?
 
     @books.each do |book|
-      title = book["title"]
-      author = book["author"]
+      title = book['title']
+      author = book['author']
       puts "Title: \"#{title}\", Author: #{author}"
     end
   end
 
   def list_people
+    @people = JSON.parse(File.read('people.json')) if File.exist?('people.json')
     return puts 'No people found' if @people.empty?
-    
+
     @people.each do |person|
-      puts person
-      puts "[#{person["type"]}] Name: #{person["name"]}, ID: #{person["id"]}, Age: #{person["age"]}"
+      puts "[#{person['type']}] Name: #{person['name']}, ID: #{person['id']}, Age: #{person['age']}"
     end
   end
 
@@ -109,22 +99,21 @@ class App
   end
 
   def create_rental
-
     puts 'Select a book from the following list by number'
     @books.each_with_index do |book, index|
-      puts "#{index}) Title: \"#{book["title"]}\", Author: #{book["author"]}"
+      puts "#{index}) Title: \"#{book['title']}\", Author: #{book['author']}"
     end
 
     book_index = gets.chomp.to_i
 
-    puts '\nSelect a person from the following list by number (not id)'
+    puts 'Select a person from the following list by number (not id)'
     @people.each_with_index do |person, index|
-      puts "#{index}) [#{person["type"]}] Name: #{person["name"]}, ID: #{person["id"]}, Age: #{person["age"]}"
+      puts "#{index}) [#{person['type']}] Name: #{person['name']}, ID: #{person['id']}, Age: #{person['age']}"
     end
 
     person_index = gets.chomp.to_i
 
-    print '\nDate: '
+    print 'Date: '
     date = gets.chomp
 
     @rentals << Rental.new(date, @books[book_index], @people[person_index])
@@ -137,19 +126,22 @@ class App
   end
 
   def list_rentals_by_person_id
+    @rentals = JSON.parse(File.read('rentals.json')) if File.exist?('rentals.json')
     print 'ID of person: '
     id = gets.chomp
 
-    selected_rentals = @rentals.select { |rental| rental.person.id == id.to_i }
+    puts @rentals
+
+    selected_rentals = @rentals.select { |rental| rental['person']['id'] == id.to_i }
 
     return puts "No rentals found for ID(#{id})" if selected_rentals.empty?
 
     puts 'Rentals:'
     selected_rentals.each do |rental|
-      date = rental.date
-      book_title = rental.book.title
-      book_author = rental.book.author
-      puts "#{date}, Book \"#{book_title}\" by #{book_author}"
+      date = rental['date']
+      book_title = rental['book']['title']
+      book_author = rental['book']['author']
+      puts "Date : #{date}, Book Title : \"#{book_title}\", Author \" #{book_author}\""
     end
   end
 end
