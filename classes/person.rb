@@ -2,19 +2,19 @@ require_relative 'nameable'
 require_relative 'rental'
 
 class Person < Nameable
-  @@id_count = 0
   def initialize(age, name = 'Unknown', parent_permission: true)
     super()
-    @id = generate_id
+    @id = Random.rand(1..1000)
     @name = name
     @age = age
     @parent_permission = parent_permission
     @rentals = []
   end
-
-  def generate_id
-    @@id_count += 1
-  end
+  
+  # def generate_id
+  #   id_count = 0
+  #   id_count += 1
+  # end
 
   attr_accessor :rentals, :name, :age
   attr_reader :id
