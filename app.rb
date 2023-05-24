@@ -10,6 +10,9 @@ class App
     @books = books
     @people = people
     @rentals = rentals
+    # load people from json file during initialization
+    load_people
+    list_rentals
   end
 
   # Load books from JSON file
@@ -32,6 +35,19 @@ class App
     end
   end
 
+  def list_rentals
+    if File.exist?('rentals.json')
+      rentals = JSON.parse(File.read('rentals.json'))
+      @rentals = rentals.map do |rental|
+        book = Book.new(rental['book']['title'], rental['book']['author'])
+        person = Person.new(rental['person']['age'], rental['person']['name'])
+        Rental.new(rental['date'], book, person)
+      end
+    else
+      @rentals = []
+    end
+  end
+
   def list_books
     load_books
 
@@ -45,8 +61,6 @@ class App
   end
 
   def list_people
-    load_people
-
     return puts 'No people found' if @people.empty?
 
     @people.each do |person|
@@ -119,7 +133,6 @@ class App
 
   def create_rental
     load_books
-    load_people
 
     puts 'Select a book from the following list by number'
     @books.each_with_index do |book, index|
@@ -144,21 +157,31 @@ class App
 
     @rentals << Rental.new(date, @books[book_index], @people[person_index])
 
+    # convert @books elements into hashes
+    rental_array = @rentals.map(&:to_h)
+    File.write('rentals.json', JSON.generate(rental_array))
+
     puts 'Rental created successfully'
   end
 
   def list_rentals_by_person_id
-    
     print 'ID of person: '
     id = gets.chomp
 
-    selected_rentals = @rentals.select { |rental| rental.person.id == id.to_i }
+    # selected_rentals = @rentals.select { |rental| rental.person.id == id.to_i }
+    selected_rentals = @rentals.select do |rental|
+      puts "Comparing #{rental.person.id} with #{id.to_i}"
+      rental.person.id == id.to_i
+    end
 
     return puts "No rentals found for ID(#{id})" if selected_rentals.empty?
 
     puts 'Rentals:'
     selected_rentals.each do |rental|
-      puts "#{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}"
+      date = rental.date
+      book_title = rental.book.title
+      book_author = rental.book.author
+      puts "#{date}, Book \"#{book_title}\" by #{book_author}"
     end
   end
 end

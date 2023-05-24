@@ -6,6 +6,7 @@ def main
   people = []
   rentals = []
 
+  books = JSON.parse(File.read('books.json')) if File.exist?('books.json')
   people = JSON.parse(File.read('people.json')) if File.exist?('people.json')
   rentals = JSON.parse(File.read('rentals.json')) if File.exist?('rentals.json')
 
