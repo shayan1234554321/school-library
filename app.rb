@@ -169,10 +169,6 @@ class App
     id = gets.chomp
 
     selected_rentals = @rentals.select { |rental| rental.person.id == id.to_i }
-    # selected_rentals = @rentals.select do |rental|
-    #   # puts "Comparing #{rental.person.id} with #{id.to_i}"
-    #   rental.person.id == id.to_i
-    # end
 
     return puts "No rentals found for ID(#{id})" if selected_rentals.empty?
 
