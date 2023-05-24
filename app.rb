@@ -10,61 +10,35 @@ class App
     @books = books
     @people = people
     @rentals = rentals
-    # load people from json file during initialization
-    load_people
-    list_rentals
-  end
-
-  # Load books from JSON file
-  def load_books
-    if File.exist?('books.json')
-      books = JSON.parse(File.read('books.json'))
-      @books = books.map { |book| Book.new(book['title'], book['author']) }
-    else
-      @books = []
-    end
-  end
-
-  # Load people from JSON file
-  def load_people
-    if File.exist?('people.json')
-      persons = JSON.parse(File.read('people.json'))
-      @people = persons.map { |person| Person.new(person['age'], person['name']) }
-    else
-      @people = []
-    end
   end
 
   def list_rentals
-    if File.exist?('rentals.json')
-      rentals = JSON.parse(File.read('rentals.json'))
-      @rentals = rentals.map do |rental|
-        book = Book.new(rental['book']['title'], rental['book']['author'])
-        person = Person.new(rental['person']['age'], rental['person']['name'])
-        Rental.new(rental['date'], book, person)
-      end
-    else
-      @rentals = []
+    return puts 'No Rentals found' if @rentals.empty?
+
+    @rentals.each do |rental|
+      puts "Date #{rental["date"]}"
+      puts "Name #{rental["person"]["name"]}"
+      puts "Book #{rental["book"]["title"]}"
     end
   end
 
   def list_books
-    load_books
 
     return puts 'No books found' if @books.empty?
 
     @books.each do |book|
-      title = book.title
-      author = book.author
+      title = book["title"]
+      author = book["author"]
       puts "Title: \"#{title}\", Author: #{author}"
     end
   end
 
   def list_people
     return puts 'No people found' if @people.empty?
-
+    
     @people.each do |person|
-      puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      puts person
+      puts "[#{person["type"]}] Name: #{person["name"]}, ID: #{person["id"]}, Age: #{person["age"]}"
     end
   end
 
@@ -98,9 +72,11 @@ class App
 
     @people << Student.new(age, nil, name, parent_permission: parent_permission)
 
-    # convert @people elements into hashes
+    # Writing on the file
     people_array = @people.map(&:to_h)
     File.write('people.json', JSON.generate(people_array))
+
+    puts 'Student created successfully'
   end
 
   def create_teacher(age, name)
@@ -109,9 +85,11 @@ class App
 
     @people << Teacher.new(age, specialization, name)
 
-    # convert @people elements into hashes
+    # Writing on the file
     people_array = @people.map(&:to_h)
     File.write('people.json', JSON.generate(people_array))
+
+    puts 'Teacher created successfully'
   end
 
   def create_book
@@ -123,41 +101,35 @@ class App
 
     @books << Book.new(title, author)
 
-    # convert @books elements into hashes
+    # Writing on the file
     book_array = @books.map(&:to_h)
-    # converts the book_array into a JSON string
     File.write('books.json', JSON.generate(book_array))
 
     puts 'Book created successfully'
   end
 
   def create_rental
-    load_books
 
     puts 'Select a book from the following list by number'
     @books.each_with_index do |book, index|
-      puts "#{index}) Title: \"#{book.title}\", Author: #{book.author}"
+      puts "#{index}) Title: \"#{book["title"]}\", Author: #{book["author"]}"
     end
 
     book_index = gets.chomp.to_i
 
-    puts
-
-    puts 'Select a person from the following list by number (not id)'
+    puts '\nSelect a person from the following list by number (not id)'
     @people.each_with_index do |person, index|
-      puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      puts "#{index}) [#{person["type"]}] Name: #{person["name"]}, ID: #{person["id"]}, Age: #{person["age"]}"
     end
 
     person_index = gets.chomp.to_i
 
-    puts
-
-    print 'Date: '
+    print '\nDate: '
     date = gets.chomp
 
     @rentals << Rental.new(date, @books[book_index], @people[person_index])
 
-    # convert @books elements into hashes
+    # Writing on the file
     rental_array = @rentals.map(&:to_h)
     File.write('rentals.json', JSON.generate(rental_array))
 

@@ -17,6 +17,7 @@ def main
     menu.print_menu
     user_choice = gets.chomp.to_i
     if user_choice == 7
+
       puts 'Thank you for using this app'
       break
     end

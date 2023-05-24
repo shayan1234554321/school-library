@@ -2,11 +2,12 @@ require_relative 'nameable'
 require_relative 'rental'
 
 class Person < Nameable
-  def initialize(age, name = 'Unknown', parent_permission: true)
+  def initialize(type, age, name = 'Unknown', parent_permission: true)
     super()
     @id = Random.rand(1..1000)
     @name = name
     @age = age
+    @type = type
     @parent_permission = parent_permission
     @rentals = []
   end
@@ -20,6 +21,7 @@ class Person < Nameable
       name: @name,
       age: @age,
       parent_permission: @parent_permission,
+      type: @type,
       rentals: @rentals.map(&:to_h)
     }
   end
