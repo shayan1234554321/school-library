@@ -10,11 +10,6 @@ class Person < Nameable
     @parent_permission = parent_permission
     @rentals = []
   end
-  
-  # def generate_id
-  #   id_count = 0
-  #   id_count += 1
-  # end
 
   attr_accessor :rentals, :name, :age
   attr_reader :id
