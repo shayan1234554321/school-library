@@ -1,7 +1,9 @@
 require_relative '../app'
 
 class Menu
-  APP = App.new
+  def initialize(books, people, rentals)
+    @app = App.new(books, people, rentals)
+  end
 
   def print_menu
     puts "\nPlease choose an option by entering a number:
@@ -17,17 +19,17 @@ class Menu
   def result(user_choice)
     case user_choice
     when 1
-      APP.list_books
+      @app.list_books
     when 2
-      APP.list_people
+      @app.list_people
     when 3
-      APP.create_person
+      @app.create_person
     when 4
-      APP.create_book
+      @app.create_book
     when 5
-      APP.create_rental
+      @app.create_rental
     when 6
-      APP.list_rentals_by_person_id
+      @app.list_rentals_by_person_id
     end
   end
 end
