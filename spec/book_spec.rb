@@ -16,10 +16,10 @@ describe Book do
         it "returns the correct author" do
             book.author.should eql "Shayan"
         end
-        it "Adding rentals" do
+        # it "Adding rentals" do
             # print person.type
             # book.add_rentals(person , date)
             # expect(book.rentals).to include(person)
-        end
+        # end
     end
 end
